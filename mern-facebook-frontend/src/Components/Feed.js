@@ -1,23 +1,53 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Feed.css";
 import MessageSender from "./MessageSender";
 import Post from "./Post";
 import StoryReel from "./StoryReel";
+import axios from "../axios";
+import Pusher from "pusher-js";
 
-function Feed() {
+const pusher = new Pusher("c5491cde91fb74e5fe4d", {
+  cluster: "mt1",
+});
+
+const Feed = () => {
+  const [profilePic, setProfilePic] = useState("");
+  const [postsData, setPostsData] = useState([]);
+
+  const syncFeed = () => {
+    axios.get("/retrieve/posts").then((res) => {
+      console.log(res.data);
+      setPostsData(res.data);
+    });
+  };
+
+  useEffect(() => {
+    const channel = pusher.subscribe("posts");
+    channel.bind("inserted", function (data) {
+      syncFeed();
+    });
+  }, []);
+
+  useEffect(() => {
+    syncFeed();
+  }, []);
+
   return (
     <div className="feed">
       <StoryReel />
       <MessageSender />
-      <Post
-        profilePic="https://scontent.fbey14-1.fna.fbcdn.net/v/t1.0-9/69031466_2834298463250348_3437230252173033472_o.jpg?_nc_cat=109&_nc_sid=09cbfe&_nc_ohc=ogEXM1eGDp8AX_exeFy&_nc_ht=scontent.fbey14-1.fna&oh=2ad1989279447503894a639e2f512068&oe=5FAD8787"
-        message="This is a Message"
-        timestamp="time"
-        imageName="imageName"
-        username="Patrick Wehbe"
-      />
+
+      {postsData.map((entry) => (
+        <Post
+          profilePic={entry.avatar}
+          message={entry.text}
+          timestamp={entry.timestamp}
+          imgName={entry.imgName}
+          username={entry.user}
+        />
+      ))}
     </div>
   );
-}
+};
 
 export default Feed;

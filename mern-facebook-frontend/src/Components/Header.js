@@ -1,54 +1,77 @@
 import React from "react";
+import "./Header.css";
 import SearchIcon from "@material-ui/icons/Search";
 import HomeIcon from "@material-ui/icons/Home";
 import FlagIcon from "@material-ui/icons/Flag";
-import SubscriptionOutlinedIcon from "@material-ui/icons/SubscriptionsOutlined";
-import Avatar from "@material-ui/core/Avatar";
-import "./Header.css";
+import SubscriptionsOutlinedIcon from "@material-ui/icons/SubscriptionsOutlined";
+import StorefrontOutlinedIcon from "@material-ui/icons/StorefrontOutlined";
+import SupervisedUserCircleIcon from "@material-ui/icons/SupervisedUserCircle";
+import { Avatar, IconButton } from "@material-ui/core";
+import AddIcon from "@material-ui/icons/Add";
+import ForumIcon from "@material-ui/icons/Forum";
+import NotificationsActiveIcon from "@material-ui/icons/NotificationsActive";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { useStateValue } from "../StateProvider";
 
-function Header() {
+const Header = () => {
+  const [{ user }, dispatch] = useStateValue();
+
   return (
     <div className="header">
       <div className="header__left">
         <img
-          src="https://www.logo.wine/a/logo/Facebook/Facebook-f_Logo-Blue-Logo.wine.svg"
-          alt="Facebook Logo"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1200px-Facebook_Logo_%282019%29.png"
+          alt="Facebook logo"
         />
       </div>
+
       <div className="header__input">
         <SearchIcon />
-        <input type="text" placeholder="search" />
+        <input placeholder="Search Facebook" type="text" />
       </div>
+
       <div className="header__center">
         <div className="header__option header__option--active">
-          <HomeIcon />
-        </div>
-
-        <div className="header__option">
-          <FlagIcon />
+          <HomeIcon fontsize="large" />
         </div>
         <div className="header__option">
-          <SubscriptionOutlinedIcon />
+          <FlagIcon fontsize="large" />
         </div>
         <div className="header__option">
-          <HomeIcon />
+          <SubscriptionsOutlinedIcon fontsize="large" />
         </div>
         <div className="header__option">
-          <HomeIcon />
+          <StorefrontOutlinedIcon fontsize="large" />
+        </div>
+        <div className="header__option">
+          <SupervisedUserCircleIcon fontsize="large" />
         </div>
       </div>
+
       <div className="header__right">
         <div className="header__info">
-          <Avatar src="https://scontent.fbey14-1.fna.fbcdn.net/v/t1.0-9/69031466_2834298463250348_3437230252173033472_o.jpg?_nc_cat=109&_nc_sid=09cbfe&_nc_ohc=ogEXM1eGDp8AX_exeFy&_nc_ht=scontent.fbey14-1.fna&oh=2ad1989279447503894a639e2f512068&oe=5FAD8787" />
-          <h4>Patrick Wehbe</h4>
-          <HomeIcon />
-          <HomeIcon />
-          <HomeIcon />
-          <HomeIcon />
+          <Avatar src={user.photoURL} />
+          <h4>{user.displayName}</h4>
         </div>
+
+        <IconButton>
+          <AddIcon />
+        </IconButton>
+
+        <IconButton>
+          <ForumIcon />
+        </IconButton>
+
+        <IconButton>
+          <NotificationsActiveIcon />
+        </IconButton>
+
+        <IconButton>
+          <ExpandMoreIcon />
+        </IconButton>
       </div>
     </div>
   );
-}
+};
 
 export default Header;

@@ -1,30 +1,36 @@
 import React from "react";
+import "./Sidebar.css";
+import SidebarRow from "./SidebarRow";
 import LocalHospitalIcon from "@material-ui/icons/LocalHospital";
-import EmojiFlagIcon from "@material-ui/icons/EmojiFlags";
+import EmojiFlagsIcon from "@material-ui/icons/EmojiFlags";
 import PeopleIcon from "@material-ui/icons/People";
 import ChatIcon from "@material-ui/icons/Chat";
-import StoreFrontIcon from "@material-ui/icons/Storefront";
+import StorefrontIcon from "@material-ui/icons/Storefront";
 import VideoLibraryIcon from "@material-ui/icons/VideoLibrary";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMoreOutlined";
-import SidebarRow from "./SidebarRow";
-import "./Sidebar.css";
+import ExpandMoreOutlined from "@material-ui/icons/ExpandMoreOutlined";
+import { useStateValue } from "../StateProvider";
 
-function Sidebar() {
+const Sidebar = () => {
+  const [{ user }, dispatch] = useStateValue();
+
   return (
-    <div className="sidebar">
+    <div>
+      {/* <SidebarRow src={user.photoURL} title={user.displayName} /> */}
+      <SidebarRow src={user.photoURL} title={user.displayName} />
       <SidebarRow
-        src="https://scontent.fbey14-1.fna.fbcdn.net/v/t1.0-9/69031466_2834298463250348_3437230252173033472_o.jpg?_nc_cat=109&_nc_sid=09cbfe&_nc_ohc=ogEXM1eGDp8AX_exeFy&_nc_ht=scontent.fbey14-1.fna&oh=2ad1989279447503894a639e2f512068&oe=5FAD8787"
-        title="Patrick Wehbe"
-      ></SidebarRow>
-      <SidebarRow Icon={LocalHospitalIcon} title="COVID 19"></SidebarRow>
-      <SidebarRow Icon={EmojiFlagIcon} title="Pages"></SidebarRow>
-      <SidebarRow Icon={PeopleIcon} title="Friends"></SidebarRow>
-      <SidebarRow Icon={ChatIcon} title="Messages"></SidebarRow>
-      <SidebarRow Icon={StoreFrontIcon} title="Shop"></SidebarRow>
-      <SidebarRow Icon={VideoLibraryIcon} title="Stories"></SidebarRow>
-      <SidebarRow Icon={ExpandMoreIcon} title="More Options"></SidebarRow>
+        Icon={LocalHospitalIcon}
+        title="COVID-19 Information Center"
+      />
+
+      <SidebarRow Icon={EmojiFlagsIcon} title="Pages" />
+      <SidebarRow Icon={PeopleIcon} title="Friends" />
+      <SidebarRow Icon={ChatIcon} title="Messenger" />
+      <SidebarRow Icon={StorefrontIcon} title="Marketplace" />
+
+      <SidebarRow Icon={VideoLibraryIcon} title="Videos" />
+      <SidebarRow Icon={ExpandMoreOutlined} title="More" />
     </div>
   );
-}
+};
 
 export default Sidebar;

@@ -1,13 +1,14 @@
 import { Avatar } from "@material-ui/core";
-import React from "react";
-import ThumbUpIcon from "@material-ui/icons/ThumbUp";
-import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
-import NearMeIcon from "@material-ui/icons/NearMe";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMoreOutlined";
+import React, { useState } from "react";
 import "./Post.css";
+import ThumbUpIcon from "@material-ui/icons/ThumbUp";
+import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
+import NearMeIcon from "@material-ui/icons/NearMe";
+import ExpandMoreOutlined from "@material-ui/icons/ExpandMoreOutlined";
+import AccountCircleIclon from "@material-ui/icons/AccountCircle";
 
-function Post({ profilePic, message, imageName, timestamp, username }) {
+const Post = ({ profilePic, imgName, username, timestamp, message }) => {
+  console.log(timestamp);
   return (
     <div className="post">
       <div className="post__top">
@@ -20,13 +21,24 @@ function Post({ profilePic, message, imageName, timestamp, username }) {
       <div className="post__bottom">
         <p>{message}</p>
       </div>
+
+      {imgName ? (
+        <div className="post__image">
+          <img
+            src={`https://mern-facebook-backend.herokuapp.com/retrieve/images/single?name=${imgName}`}
+          />
+        </div>
+      ) : (
+        console.log("DEBUG >>> no image here")
+      )}
+
       <div className="post__options">
         <div className="post__option">
           <ThumbUpIcon />
           <p>Like</p>
         </div>
         <div className="post__option">
-          <ChatBubbleIcon />
+          <ChatBubbleOutlineIcon />
           <p>Comment</p>
         </div>
         <div className="post__option">
@@ -34,12 +46,12 @@ function Post({ profilePic, message, imageName, timestamp, username }) {
           <p>Share</p>
         </div>
         <div className="post__option">
-          <AccountCircleIcon />
-          <ExpandMoreIcon />
+          <AccountCircleIclon />
+          <ExpandMoreOutlined />
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default Post;
